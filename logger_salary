@@ -1,0 +1,29 @@
+from logger_param import logger
+
+
+@logger('salary.log')
+def calculate_salary(base_salary, overtime_hours, overtime_rate, tax=0.13):
+    """
+    Расчет зарплаты
+
+    Args:
+    base_salary - базовая ставка
+    overtime_hours - количество сверхурочных часов
+    overtime_rate - ставка за час сверхурочной работы
+    tax - налог. По умолчанию 13%
+    """
+    overtime = overtime_hours * overtime_rate
+    gross = base_salary + overtime
+    net = int(gross * (1 - tax))
+    return net
+
+
+# Пример использования
+if __name__ == '__main__':
+    result = calculate_salary(110000, 12, 6500)
+    print(f"Зарплата на руки: {result}")
+
+    # Проверка содержимого лога
+    print("\n--- Содержимое salary.log ---")
+    with open('salary.log', 'r', encoding='utf-8') as f:
+        print(f.read())
